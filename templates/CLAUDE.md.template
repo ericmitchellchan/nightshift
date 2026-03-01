@@ -1,0 +1,29 @@
+# {{PROJECT_NAME}}
+
+## Project Overview
+<!-- What this project does, in 1-2 sentences. -->
+
+## Tech Stack
+<!-- Language, framework, key dependencies. -->
+
+## Repository Structure
+<!-- Key directories and what they contain. -->
+
+## Development Setup
+<!-- How to install dependencies, configure env, run locally. -->
+
+## Testing
+<!-- How to run the test suite. Must match .nightshift.json test_command. -->
+```
+{{TEST_COMMAND}}
+```
+
+## Code Conventions
+<!-- Naming, formatting, import ordering — whatever matters for consistency. -->
+
+## Agent Instructions
+<!-- Rules for Claude Code agents working in this repo. -->
+- Read existing code before modifying it.
+- Run the test suite before declaring work complete.
+- Do not add features, refactoring, or "improvements" beyond what was asked.
+- If tests fail, fix them — do not try to bypass the Stop hook.

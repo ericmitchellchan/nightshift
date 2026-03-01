@@ -1,0 +1,30 @@
+{
+  "_comment": "Nightshift per-project configuration. Copy to .nightshift.json in your project root.",
+
+  "_examples": {
+    "python_pytest": {
+      "test_command": "python -m pytest tests/ -x -q --tb=short",
+      "watch_extensions": [".py"],
+      "test_timeout": 300
+    },
+    "node_jest": {
+      "test_command": "npm test",
+      "watch_extensions": [".ts", ".tsx", ".js", ".jsx"],
+      "test_timeout": 120
+    },
+    "node_pnpm": {
+      "test_command": "pnpm run test",
+      "watch_extensions": [".ts", ".tsx"],
+      "test_timeout": 120
+    },
+    "rust_cargo": {
+      "test_command": "cargo test",
+      "watch_extensions": [".rs"],
+      "test_timeout": 600
+    }
+  },
+
+  "test_command": "python -m pytest tests/ -x -q --tb=short",
+  "watch_extensions": [".py"],
+  "test_timeout": 300
+}

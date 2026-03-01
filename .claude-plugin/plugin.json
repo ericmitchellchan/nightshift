@@ -1,0 +1,7 @@
+{
+  "name": "nightshift",
+  "version": "0.1.0",
+  "description": "Test verification hooks and agent orchestration patterns for Claude Code",
+  "author": "ericmitchellchan",
+  "repository": "https://github.com/ericmitchellchan/nightshift"
+}
