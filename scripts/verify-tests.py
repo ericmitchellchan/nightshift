@@ -18,6 +18,12 @@ import platform
 import subprocess
 import sys
 
+# On Windows the console is often cp1252; a Unicode char in our own output
+# (e.g. echoed test output) would raise UnicodeEncodeError. Replace instead.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(errors="replace")
+
 
 # Defaults if no .nightshift.json found
 DEFAULTS = {
@@ -50,7 +56,8 @@ def get_changed_files(project_dir):
         # Staged + unstaged changes
         result = subprocess.run(
             ["git", "diff", "--name-only", "HEAD"],
-            capture_output=True, text=True, timeout=10, cwd=project_dir
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            timeout=10, cwd=project_dir
         )
         if result.stdout.strip():
             files.extend(result.stdout.strip().split("\n"))
@@ -58,7 +65,8 @@ def get_changed_files(project_dir):
         # Untracked files
         untracked = subprocess.run(
             ["git", "ls-files", "--others", "--exclude-standard"],
-            capture_output=True, text=True, timeout=10, cwd=project_dir
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            timeout=10, cwd=project_dir
         )
         if untracked.stdout.strip():
             files.extend(untracked.stdout.strip().split("\n"))
@@ -88,6 +96,11 @@ def run_tests(config, project_dir):
             shell=use_shell,
             capture_output=True,
             text=True,
+            # Test runners emit ANSI/Unicode; Windows would otherwise decode as
+            # cp1252 and crash the reader thread (UnicodeDecodeError -> bogus
+            # "TESTS FAILED" verdict). Decode as UTF-8, never crash on a byte.
+            encoding="utf-8",
+            errors="replace",
             timeout=timeout,
             cwd=project_dir,
         )
